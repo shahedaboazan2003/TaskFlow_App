@@ -68,17 +68,26 @@ class AuthRepositoryImpl implements AuthRepository {
   String _mapFirebaseAuthError(String code) {
     switch (code) {
       case 'user-not-found':
-        return 'No user found for that email.';
+        return 'No account found with this email. Please sign up first.';
       case 'wrong-password':
-        return 'Wrong password provided for that user.';
+      case 'invalid-credential':
+        return 'Incorrect email or password. Please try again.';
       case 'email-already-in-use':
-        return 'The account already exists for that email.';
+        return 'An account already exists with this email. Please sign in instead.';
       case 'weak-password':
-        return 'The password provided is too weak.';
+        return 'Password is too weak. Use at least 6 characters.';
       case 'invalid-email':
-        return 'The email address is not valid.';
+        return 'Please enter a valid email address.';
+      case 'user-disabled':
+        return 'This account has been disabled. Please contact support.';
+      case 'network-request-failed':
+        return 'Network error. Please check your connection and try again.';
+      case 'too-many-requests':
+        return 'Too many attempts. Please wait a moment and try again.';
+      case 'operation-not-allowed':
+        return 'Email/password sign-in is not enabled. Please contact support.';
       default:
-        return 'An error occurred during authentication.';
+        return 'An error occurred during authentication. Please try again.';
     }
   }
 }

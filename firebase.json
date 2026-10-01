@@ -1,0 +1,28 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "taskflow-app-3a43b",
+          "appId": "1:138009320573:android:3d795defd7f2d95c8ce514",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "taskflow-app-3a43b",
+          "configurations": {
+            "android": "1:138009320573:android:3d795defd7f2d95c8ce514",
+            "ios": "1:138009320573:ios:4bfb824a81342cc28ce514",
+            "macos": "1:138009320573:ios:4bfb824a81342cc28ce514",
+            "web": "1:138009320573:web:1eda1b184070b3ca8ce514",
+            "windows": "1:138009320573:web:f9a57806df588b358ce514"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  }
+}

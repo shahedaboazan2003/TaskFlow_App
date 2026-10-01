@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function: check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper function: check if user is the owner of the document
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Users collection: users/{uid}
+    // Each user can only access their own document
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+      allow create: if isOwner(uid)
+        && request.resource.data.uid == uid
+        && request.resource.data.keys().hasAll(['uid', 'name', 'email', 'createdAt']);
+      allow update: if isOwner(uid)
+        && request.resource.data.uid == uid;
+      allow delete: if isOwner(uid);
+    }
+
+    // Tasks collection: tasks/{taskId}
+    // Each task has a userId field; only the owner can access it
+    match /tasks/{taskId} {
+      allow read: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.keys().hasAll(['userId', 'title', 'status', 'priority', 'createdAt', 'updatedAt']);
+      allow update: if isAuthenticated()
+        && resource.data.userId == request.auth.uid
+        && request.resource.data.userId == request.auth.uid;
+      allow delete: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+    }
+  }
+}
